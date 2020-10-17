@@ -1,3 +1,3 @@
 # Fundamentals
 
-Data structures and algorithms implemented in Golang ﳑ.
+Data structures and algorithms implemented in Golang.

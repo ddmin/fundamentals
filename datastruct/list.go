@@ -1,4 +1,4 @@
-package main
+package datastruct
 
 import (
 	"fmt"
@@ -15,12 +15,12 @@ type list struct {
 }
 
 // create new list instance
-func newList() *list {
+func NewList() *list {
 	return &list{2, 0, make([]int, 2)}
 }
 
 // display list
-func (l *list) display() {
+func (l *list) Display() {
 	str := "["
 	for i := 0; i < l.end; i++ {
 		str += strconv.Itoa(l.arr[i])
@@ -49,7 +49,7 @@ func (l *list) adjustLength() {
 }
 
 // insert i at end of list
-func (l *list) append(i int) {
+func (l *list) Append(i int) {
 	// check for room
 	l.adjustLength()
 	// add to end of array slice
@@ -59,7 +59,7 @@ func (l *list) append(i int) {
 }
 
 // insert i at position n
-func (l *list) insert(i, n int) {
+func (l *list) Insert(i, n int) {
 	// check for room
 	l.adjustLength()
 	// shift every element >= n up 1
@@ -73,31 +73,11 @@ func (l *list) insert(i, n int) {
 }
 
 // remove element at position n
-func (l *list) remove(n int) {
+func (l *list) Remove(n int) {
 	// shift every element > n down 1
 	for c := n + 1; c < l.end; c++ {
 		l.arr[c-1] = l.arr[c]
 	}
 	// decrement end of array by 1
 	l.end -= 1
-}
-
-func main() {
-	l := newList()
-	l.display()
-
-	for i := 0; i <= 10; i++ {
-		l.append(i)
-		l.display()
-	}
-
-	for i := 7; i <= 10; i++ {
-		l.remove(i)
-		l.display()
-	}
-
-	for i := 0; i <= 7; i++ {
-		l.insert(i, 2*i)
-		l.display()
-	}
 }
