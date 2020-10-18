@@ -9,7 +9,7 @@ type list struct {
 	// maximum capacity of array
 	max int
 	// end of current list (number of items in list)
-	end int
+	size int
 	// array slice representing items in list
 	arr []int
 }
@@ -22,9 +22,9 @@ func NewList() *list {
 // display list
 func (l *list) Display() {
 	str := "["
-	for i := 0; i < l.end; i++ {
+	for i := 0; i < l.size; i++ {
 		str += strconv.Itoa(l.arr[i])
-		if i != l.end-1 {
+		if i != l.size-1 {
 			str += " "
 		}
 	}
@@ -35,12 +35,12 @@ func (l *list) Display() {
 // adjust max size of list
 // copy list into longer array slice
 func (l *list) adjustLength() {
-	if l.max <= l.end {
+	if l.max <= l.size {
 		// create array slice with double capacity
 		l.max *= 2
 		temp := make([]int, l.max)
 		// copy elements
-		for c := 0; c < l.end; c++ {
+		for c := 0; c < l.size; c++ {
 			temp[c] = l.arr[c]
 		}
 		// point to new array slice
@@ -53,9 +53,9 @@ func (l *list) Append(i int) {
 	// check for room
 	l.adjustLength()
 	// add to end of array slice
-	l.arr[l.end] = i
-	// increment end of array by 1
-	l.end += 1
+	l.arr[l.size] = i
+	// increment size of array by 1
+	l.size += 1
 }
 
 // insert i at beginning of list
@@ -68,21 +68,21 @@ func (l *list) Insert(i, n int) {
 	// check for room
 	l.adjustLength()
 	// shift every element >= n up 1
-	for c := l.end - 1; c >= n; c-- {
+	for c := l.size - 1; c >= n; c-- {
 		l.arr[c+1] = l.arr[c]
 	}
 	// insert item
 	l.arr[n] = i
-	// increment end of array by 1
-	l.end += 1
+	// increment size of array by 1
+	l.size += 1
 }
 
 // remove element at position n
 func (l *list) Remove(n int) {
 	// shift every element > n down 1
-	for c := n + 1; c < l.end; c++ {
+	for c := n + 1; c < l.size; c++ {
 		l.arr[c-1] = l.arr[c]
 	}
-	// decrement end of array by 1
-	l.end -= 1
+	// decrement size of array by 1
+	l.size -= 1
 }
