@@ -27,10 +27,13 @@ func testList() {
 
 // test linked list
 func testLinkedList() {
+	l := datastruct.NewNode(1)
+	l.Display()
 }
 
 func main() {
 	// test list functionality
 	testList()
 	//
+	testLinkedList()
 }
