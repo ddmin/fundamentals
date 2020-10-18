@@ -58,6 +58,11 @@ func (l *list) Append(i int) {
 	l.end += 1
 }
 
+// insert i at beginning of list
+func (l *list) Prepend(i int) {
+	l.Insert(i, 0)
+}
+
 // insert i at position n
 func (l *list) Insert(i, n int) {
 	// check for room
