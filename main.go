@@ -5,7 +5,7 @@ import (
 	"github.com/ddmin/fundamentals/datastruct"
 )
 
-// test list
+// test list functionality
 func testList() {
 	l := datastruct.NewList()
 	fmt.Println("Empty List")
@@ -36,7 +36,7 @@ func testList() {
 	}
 }
 
-// test linked list
+// test linked list functionality
 func testLinkedList() {
 	l := datastruct.NewLinkedList()
 	fmt.Println("Empty Linked List")
