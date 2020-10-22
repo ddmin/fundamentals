@@ -15,7 +15,7 @@ type linkedlist struct {
 	size int
 }
 
-// return a new instance of the head node
+// return a new instance of a linked list
 func NewLinkedList() *linkedlist {
 	return &linkedlist{nil, 0}
 }

@@ -118,7 +118,6 @@ func testLinkedList() {
 
 	fmt.Println("Display reversed")
 	l.DisplayReversed()
-
 }
 
 func main() {
