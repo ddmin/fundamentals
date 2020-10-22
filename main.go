@@ -77,6 +77,15 @@ func testLinkedList() {
 		l.Remove(1)
 		l.Display()
 	}
+
+	fmt.Println("Get elements")
+	for i := 0; i < 100; i++ {
+		val, ok := l.Get(i)
+		if ok {
+			fmt.Print(val, " ")
+		}
+	}
+	fmt.Println()
 }
 
 func main() {

@@ -42,6 +42,19 @@ func (l *linkedlist) Display() {
 	fmt.Println(str)
 }
 
+// get ith item of list
+func (l *linkedlist) Get(i int) (n int, ok bool) {
+	if i < l.size {
+		temp := l.head
+		for count := 0; count < i; count++ {
+			temp = temp.next
+		}
+		return temp.val, true
+	} else {
+		return 0, false
+	}
+}
+
 // change first element in list
 func (l *linkedlist) Prepend(i int) {
 	// save original head to temp
