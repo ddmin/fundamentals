@@ -68,7 +68,7 @@ func (l *linkedlist) Get(i int) (n int, ok bool) {
 	}
 }
 
-// change first element in list
+// insert i as first element in list
 func (l *linkedlist) Prepend(i int) {
 	// save original head to temp
 	temp := l.head
@@ -98,9 +98,9 @@ func (l *linkedlist) Append(i int) {
 func (l *linkedlist) Insert(i, n int) {
 	if n == 0 {
 		l.Prepend(i)
-	} else if l.size == n {
+	} else if n == l.size {
 		l.Append(i)
-	} else if l.size > n {
+	} else if n < l.size {
 		count := 0
 		prev := l.head
 		for count < n-1 {
@@ -117,6 +117,11 @@ func (l *linkedlist) Insert(i, n int) {
 
 // remove head node
 func (l *linkedlist) RemoveFirst() {
+	if l.size == 1 {
+		l.head = nil
+		l.size--
+		return
+	}
 	temp := l.head
 	l.head = temp.next
 	l.size--
@@ -136,7 +141,7 @@ func (l *linkedlist) RemoveLast() {
 func (l *linkedlist) Remove(n int) {
 	if n == 0 {
 		l.RemoveFirst()
-	} else if l.size == n-1 {
+	} else if l.size-1 == n {
 		l.RemoveLast()
 	} else if l.size > n {
 		count := 0

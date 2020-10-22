@@ -120,7 +120,53 @@ func testLinkedList() {
 	l.DisplayReversed()
 }
 
+func testDoublyLinked() {
+	d := datastruct.NewDoublyLinked()
+	fmt.Println("Empty Doubly Linked List")
+	d.Display()
+
+	fmt.Println("Prepending")
+	for i := 0; i < 3; i++ {
+		d.Prepend(-i)
+		d.Display()
+	}
+
+	fmt.Println("Appending")
+	for i := 0; i < 3; i++ {
+		d.Append(-i)
+		d.Display()
+	}
+
+	fmt.Println("Inserting")
+	for i := 0; i < 10; i++ {
+		d.Insert(2*i, i)
+		d.Display()
+	}
+
+	fmt.Println("Remove First")
+	for i := 0; i < 4; i++ {
+		d.RemoveFirst()
+		d.Display()
+	}
+
+	fmt.Println("Remove Last")
+	for i := 0; i < 7; i++ {
+		d.RemoveLast()
+		d.Display()
+	}
+
+	fmt.Println("Remove")
+	d.Remove(0)
+	d.Remove(4)
+	d.Display()
+
+	fmt.Println("Reverse")
+	d.Reverse()
+	d.Display()
+}
+
 func main() {
 	testList()
 	testLinkedList()
+	testDoublyLinked()
 }
