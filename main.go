@@ -34,6 +34,10 @@ func testList() {
 		l.Insert(i, 2*i)
 		l.Display()
 	}
+
+	fmt.Println("Reverse")
+	l.Reverse()
+	l.Display()
 }
 
 // test linked list functionality
@@ -90,6 +94,5 @@ func testLinkedList() {
 
 func main() {
 	testList()
-
-	testLinkedList()
+	// testLinkedList()
 }

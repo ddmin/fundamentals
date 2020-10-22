@@ -32,6 +32,15 @@ func (l *list) Display() {
 	fmt.Println(str)
 }
 
+// get element i from list
+func (l *list) Get(i int) (n int, ok bool) {
+	if i < l.size {
+		return l.arr[i], true
+	} else {
+		return 0, false
+	}
+}
+
 // adjust max size of list
 // copy list into longer array slice
 func (l *list) adjustLength() {
@@ -85,4 +94,16 @@ func (l *list) Remove(n int) {
 	}
 	// decrement size of array by 1
 	l.size -= 1
+}
+
+// reverse elements in list
+func (l *list) Reverse() {
+	if l.size == 0 || l.size == 1 {
+		return
+	}
+	temp := make([]int, l.size)
+	for i := 0; i < l.size; i++ {
+		temp[i], _ = l.Get(l.size - 1 - i)
+	}
+	l.arr = temp
 }
