@@ -173,3 +173,20 @@ func (l *linkedlist) Reverse() {
 		l.head = temp
 	}
 }
+
+// helper function for RecurseReverse
+func (l *linkedlist) recurse(n *node) {
+	if n.next == nil {
+		l.head = n
+		return
+	}
+	l.recurse(n.next)
+	temp := n.next
+	temp.next = n
+	n.next = nil
+}
+
+// reverse elements in list recursively
+func (l *linkedlist) RecurseReverse() {
+	l.recurse(l.head)
+}

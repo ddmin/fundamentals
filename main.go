@@ -112,8 +112,13 @@ func testLinkedList() {
 	}
 	fmt.Println()
 
+	fmt.Println("Recursive")
+	l.RecurseReverse()
+	l.Display()
+
 	fmt.Println("Display reversed")
 	l.DisplayReversed()
+
 }
 
 func main() {
