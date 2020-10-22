@@ -38,6 +38,15 @@ func testList() {
 	fmt.Println("Reverse")
 	l.Reverse()
 	l.Display()
+
+	fmt.Println("Get elements")
+	for i := 0; i < 100; i++ {
+		val, ok := l.Get(i)
+		if ok {
+			fmt.Print(val, " ")
+		}
+	}
+	fmt.Println()
 }
 
 // test linked list functionality
@@ -82,6 +91,18 @@ func testLinkedList() {
 		l.Display()
 	}
 
+	fmt.Println("Reverse")
+	a := datastruct.NewLinkedList()
+	for n := 0; n < 10; n++ {
+		a.Display()
+		a.Reverse()
+		a.Display()
+		a.Append(n)
+	}
+
+	l.Reverse()
+	l.Display()
+
 	fmt.Println("Get elements")
 	for i := 0; i < 100; i++ {
 		val, ok := l.Get(i)
@@ -90,9 +111,12 @@ func testLinkedList() {
 		}
 	}
 	fmt.Println()
+
+	fmt.Println("Display reversed")
+	l.DisplayReversed()
 }
 
 func main() {
 	testList()
-	// testLinkedList()
+	testLinkedList()
 }

@@ -42,6 +42,19 @@ func (l *linkedlist) Display() {
 	fmt.Println(str)
 }
 
+// create string to be displayed by DisplayReversed()
+func formatReversed(n *node) string {
+	if n.next == nil {
+		return " " + strconv.Itoa(n.val) + " "
+	}
+	return formatReversed(n.next) + strconv.Itoa(n.val) + " "
+}
+
+// print reversed elements in list recursively
+func (l *linkedlist) DisplayReversed() {
+	fmt.Println("[" + formatReversed(l.head) + "]")
+}
+
 // get ith item of list
 func (l *linkedlist) Get(i int) (n int, ok bool) {
 	if i < l.size {
@@ -69,6 +82,7 @@ func (l *linkedlist) Append(i int) {
 	// if list is empty, set head to point to first node
 	if l.head == nil {
 		l.head = &node{i, nil}
+		l.size = 1
 		return
 	}
 
@@ -136,5 +150,26 @@ func (l *linkedlist) Remove(n int) {
 		l.size--
 	} else {
 		return
+	}
+}
+
+// reverse elements in list
+func (l *linkedlist) Reverse() {
+	if l.size == 0 || l.size == 1 {
+		return
+	} else {
+		prev := l.head      // prev points to first node
+		next := l.head.next // next points to second node
+
+		temp := l.head
+		temp.next = nil // set first node to point to nil
+
+		for next != nil {
+			prev = temp
+			temp = next
+			next = next.next
+			temp.next = prev
+		}
+		l.head = temp
 	}
 }
