@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/ddmin/fundamentals/datastruct"
+	"math"
 )
 
 // test list functionality
@@ -120,6 +121,7 @@ func testLinkedList() {
 	l.DisplayReversed()
 }
 
+// test doubly linked list functionality
 func testDoublyLinked() {
 	d := datastruct.NewDoublyLinked()
 	fmt.Println("Empty Doubly Linked List")
@@ -165,8 +167,63 @@ func testDoublyLinked() {
 	d.Display()
 }
 
+// testing reversing using stack
+func reverseInteger(n int) int {
+	i := 0
+	s := datastruct.NewStack()
+	for int(math.Pow10(i)) <= n {
+		i++
+	}
+	count := i - 1
+	for i > 0 {
+		item := n / int(math.Pow10(i-1))
+		n -= item * int(math.Pow10(i-1))
+		s.Push(item)
+		i--
+	}
+	sum := 0
+	for !s.IsEmpty() {
+		val, _ := s.Top()
+		sum += val * int(math.Pow10(count))
+		s.Pop()
+		count--
+	}
+	return sum
+}
+
+// test stack functionality
+func testStack() {
+	s := datastruct.NewStack()
+	fmt.Println("Empty Stack")
+	fmt.Println("Pushing")
+	for i := 0; i <= 10; i++ {
+		s.Push(i)
+		n, ok := s.Top()
+		if ok {
+			fmt.Println("Top:", n)
+		}
+	}
+	fmt.Println("Popping")
+	for i := 0; i < 12; i++ {
+		s.Pop()
+		n, ok := s.Top()
+		if ok {
+			fmt.Println("Top:", n)
+		} else {
+			fmt.Println("Stack is empty!")
+		}
+	}
+	fmt.Println("Reversing (using stacks)")
+	for _, integer := range [...]int{1000, 12419, 28072, 5, 19, 10012} {
+		fmt.Println(integer, "->", reverseInteger(integer))
+	}
+}
+
 func main() {
+	// list-like data structures
 	testList()
 	testLinkedList()
 	testDoublyLinked()
+
+	testStack()
 }
