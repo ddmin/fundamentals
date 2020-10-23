@@ -6,41 +6,53 @@ import (
 	"math"
 )
 
+// to differentiate text
+func titleize(s string) {
+	bars := "======================================="
+	fmt.Print("\n", bars, " ", s, " ", bars, "\n\n")
+}
+
+// to differentiate different data structures
+func separate(s string) {
+	bars := "###################################################################"
+	fmt.Print("\n", bars, " ", s, " ", bars, "\n\n")
+}
+
 // test list functionality
 func testList() {
 	l := datastruct.NewList()
-	fmt.Println("Empty List")
+	separate("Init List")
 	l.Display()
 
-	fmt.Println("Prepending")
+	titleize("Prepending")
 	for i := 0; i <= 5; i++ {
 		l.Prepend(i)
 		l.Display()
 	}
 
-	fmt.Println("Appending")
+	titleize("Appending")
 	for i := 0; i <= 5; i++ {
 		l.Append(i)
 		l.Display()
 	}
 
-	fmt.Println("Removing")
+	titleize("Removing")
 	for i := 0; i <= 5; i++ {
 		l.Remove(i)
 		l.Display()
 	}
 
-	fmt.Println("Inserting")
+	titleize("Inserting")
 	for i := 0; i <= 5; i++ {
 		l.Insert(i, 2*i)
 		l.Display()
 	}
 
-	fmt.Println("Reverse")
+	titleize("Reverse")
 	l.Reverse()
 	l.Display()
 
-	fmt.Println("Get elements")
+	titleize("Get elements")
 	for i := 0; i < 100; i++ {
 		val, ok := l.Get(i)
 		if ok {
@@ -53,46 +65,46 @@ func testList() {
 // test linked list functionality
 func testLinkedList() {
 	l := datastruct.NewLinkedList()
-	fmt.Println("Empty Linked List")
+	separate("Init Linked List")
 	l.Display()
 
-	fmt.Println("Prepending")
+	titleize("Prepending")
 	for i := 0; i <= 8; i++ {
 		l.Prepend(i)
 		l.Display()
 	}
 
-	fmt.Println("Appending")
+	titleize("Appending")
 	for i := 1; i <= 4; i++ {
 		l.Append(i)
 		l.Display()
 	}
 
-	fmt.Println("Inserting")
+	titleize("Inserting")
 	for i := 2; i <= 8; i += 2 {
 		l.Insert(i, i)
 		l.Display()
 	}
 
-	fmt.Println("Remove First")
+	titleize("Remove First")
 	for i := 0; i < 3; i++ {
 		l.RemoveFirst()
 		l.Display()
 	}
 
-	fmt.Println("Remove Last")
+	titleize("Remove Last")
 	for i := 0; i < 3; i++ {
 		l.RemoveLast()
 		l.Display()
 	}
 
-	fmt.Println("Remove")
+	titleize("Remove")
 	for i := 0; i < 3; i++ {
 		l.Remove(1)
 		l.Display()
 	}
 
-	fmt.Println("Reverse")
+	titleize("Reverse")
 	a := datastruct.NewLinkedList()
 	for n := 0; n < 10; n++ {
 		a.Display()
@@ -104,7 +116,7 @@ func testLinkedList() {
 	l.Reverse()
 	l.Display()
 
-	fmt.Println("Get elements")
+	titleize("Get elements")
 	for i := 0; i < 100; i++ {
 		val, ok := l.Get(i)
 		if ok {
@@ -113,56 +125,56 @@ func testLinkedList() {
 	}
 	fmt.Println()
 
-	fmt.Println("Recursive")
+	titleize("Recursive")
 	l.RecurseReverse()
 	l.Display()
 
-	fmt.Println("Display reversed")
+	titleize("Display reversed")
 	l.DisplayReversed()
 }
 
 // test doubly linked list functionality
 func testDoublyLinked() {
 	d := datastruct.NewDoublyLinked()
-	fmt.Println("Empty Doubly Linked List")
+	separate("Init Doubly Linked")
 	d.Display()
 
-	fmt.Println("Prepending")
+	titleize("Prepending")
 	for i := 0; i < 3; i++ {
 		d.Prepend(-i)
 		d.Display()
 	}
 
-	fmt.Println("Appending")
+	titleize("Appending")
 	for i := 0; i < 3; i++ {
 		d.Append(-i)
 		d.Display()
 	}
 
-	fmt.Println("Inserting")
+	titleize("Inserting")
 	for i := 0; i < 10; i++ {
 		d.Insert(2*i, i)
 		d.Display()
 	}
 
-	fmt.Println("Remove First")
+	titleize("Remove First")
 	for i := 0; i < 4; i++ {
 		d.RemoveFirst()
 		d.Display()
 	}
 
-	fmt.Println("Remove Last")
+	titleize("Remove Last")
 	for i := 0; i < 7; i++ {
 		d.RemoveLast()
 		d.Display()
 	}
 
-	fmt.Println("Remove")
+	titleize("Remove")
 	d.Remove(0)
 	d.Remove(4)
 	d.Display()
 
-	fmt.Println("Reverse")
+	titleize("Reverse")
 	d.Reverse()
 	d.Display()
 }
@@ -191,11 +203,41 @@ func reverseInteger(n int) int {
 	return sum
 }
 
+// stack implementation of bracket pair check
+func checkBracketPairs(exp string) bool {
+	s := datastruct.NewStack()
+	for _, c := range exp {
+		switch c {
+		case 40, 91, 123:
+			s.Push(int(c))
+		case 41:
+			if val, _ := s.Top(); val == 40 {
+				s.Pop()
+			} else {
+				return false
+			}
+		case 93:
+			if val, _ := s.Top(); val == 91 {
+				s.Pop()
+			} else {
+				return false
+			}
+		case 125:
+			if val, _ := s.Top(); val == 123 {
+				s.Pop()
+			} else {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 // test stack functionality
 func testStack() {
 	s := datastruct.NewStack()
-	fmt.Println("Empty Stack")
-	fmt.Println("Pushing")
+	separate("Init Stack")
+	titleize("Pushing")
 	for i := 0; i <= 10; i++ {
 		s.Push(i)
 		n, ok := s.Top()
@@ -203,7 +245,7 @@ func testStack() {
 			fmt.Println("Top:", n)
 		}
 	}
-	fmt.Println("Popping")
+	titleize("Popping")
 	for i := 0; i < 12; i++ {
 		s.Pop()
 		n, ok := s.Top()
@@ -213,10 +255,17 @@ func testStack() {
 			fmt.Println("Stack is empty!")
 		}
 	}
-	fmt.Println("Reversing (using stacks)")
+	titleize("Reversing (using stacks)")
 	for _, integer := range [...]int{1000, 12419, 28072, 5, 19, 10012} {
 		fmt.Println(integer, "->", reverseInteger(integer))
 	}
+	titleize("Check for matching braces")
+	function := "func return5() {int x:=5; return x}"
+	gibberish := "(())))"
+	gibberish2 := "{[something((interesting[]))]}0"
+	fmt.Println(function, "->", checkBracketPairs(function))
+	fmt.Println(gibberish, "->", checkBracketPairs(gibberish))
+	fmt.Println(gibberish2, "->", checkBracketPairs(gibberish2))
 }
 
 func main() {
