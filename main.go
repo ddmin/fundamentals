@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/ddmin/fundamentals/datastruct"
-	"math"
 )
 
 // to differentiate text
@@ -179,60 +178,6 @@ func testDoublyLinked() {
 	d.Display()
 }
 
-// testing reversing using stack
-func reverseInteger(n int) int {
-	i := 0
-	s := datastruct.NewStack()
-	for int(math.Pow10(i)) <= n {
-		i++
-	}
-	count := i - 1
-	for i > 0 {
-		item := n / int(math.Pow10(i-1))
-		n -= item * int(math.Pow10(i-1))
-		s.Push(item)
-		i--
-	}
-	sum := 0
-	for !s.IsEmpty() {
-		val, _ := s.Top()
-		sum += val * int(math.Pow10(count))
-		s.Pop()
-		count--
-	}
-	return sum
-}
-
-// stack implementation of bracket pair check
-func checkBracketPairs(exp string) bool {
-	s := datastruct.NewStack()
-	for _, c := range exp {
-		switch c {
-		case 40, 91, 123:
-			s.Push(int(c))
-		case 41:
-			if val, _ := s.Top(); val == 40 {
-				s.Pop()
-			} else {
-				return false
-			}
-		case 93:
-			if val, _ := s.Top(); val == 91 {
-				s.Pop()
-			} else {
-				return false
-			}
-		case 125:
-			if val, _ := s.Top(); val == 123 {
-				s.Pop()
-			} else {
-				return false
-			}
-		}
-	}
-	return true
-}
-
 // test stack functionality
 func testStack() {
 	s := datastruct.NewStack()
@@ -257,15 +202,15 @@ func testStack() {
 	}
 	titleize("Reversing (using stacks)")
 	for _, integer := range [...]int{1000, 12419, 28072, 5, 19, 10012} {
-		fmt.Println(integer, "->", reverseInteger(integer))
+		fmt.Println(integer, "->", datastruct.ReverseInteger(integer))
 	}
 	titleize("Check for matching braces")
 	function := "func return5() {int x:=5; return x}"
 	gibberish := "(())))"
 	gibberish2 := "{[something((interesting[]))]}0"
-	fmt.Println(function, "->", checkBracketPairs(function))
-	fmt.Println(gibberish, "->", checkBracketPairs(gibberish))
-	fmt.Println(gibberish2, "->", checkBracketPairs(gibberish2))
+	fmt.Println(function, "->", datastruct.CheckBracketPairs(function))
+	fmt.Println(gibberish, "->", datastruct.CheckBracketPairs(gibberish))
+	fmt.Println(gibberish2, "->", datastruct.CheckBracketPairs(gibberish2))
 }
 
 func main() {
