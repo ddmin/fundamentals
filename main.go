@@ -219,12 +219,17 @@ func testIntStack() {
 		fmt.Println(integer, "->", datastruct.ReverseInteger(integer))
 	}
 	titleize("Check for matching braces")
-	function := "func return5() {int x:=5; return x}"
-	gibberish := "(())))"
-	gibberish2 := "{[something((interesting[]))]}0"
-	fmt.Println(function, "->", datastruct.CheckBracketPairs(function))
-	fmt.Println(gibberish, "->", datastruct.CheckBracketPairs(gibberish))
-	fmt.Println(gibberish2, "->", datastruct.CheckBracketPairs(gibberish2))
+
+	strings := [...]string{
+		"func return5() {int x:=5; return x}",
+		"(())))",
+		"((((((((())))))))",
+		"{[something((interesting[]))]}0",
+	}
+
+	for _, i := range strings {
+		fmt.Println(i, "->", datastruct.CheckBracketPairs(i))
+	}
 }
 
 // test int stack functionality
@@ -294,8 +299,14 @@ func testStringStack() {
 
 	titleize("Evaluate Postfix")
 	for _, eq := range postfix {
-		fmt.Println("("+eq, ") -> ", datastruct.EvaluatePostfix(eq))
+		fmt.Println("("+eq+") -> ", datastruct.EvaluatePostfix(eq))
 	}
+
+	titleize("Evaluate Infix")
+	equation := "( 72 / 3 ) / ( 1 + ( 75 / 25 ) )"
+	bad_equation := "( 72 / 3 ) / ( 1 + ( 75 / 25 )"
+	fmt.Println(equation, "->", datastruct.EvaluateInfix(equation))
+	fmt.Println(bad_equation, "  ->", datastruct.EvaluateInfix(bad_equation))
 }
 
 func main() {

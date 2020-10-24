@@ -74,36 +74,6 @@ func ReverseInteger(n int) int {
 	return sum
 }
 
-// stack implementation of bracket pair check
-func CheckBracketPairs(exp string) bool {
-	s := NewIntStack()
-	for _, c := range exp {
-		switch c {
-		case 40, 91, 123:
-			s.Push(int(c))
-		case 41:
-			if val, _ := s.Top(); val == 40 {
-				s.Pop()
-			} else {
-				return false
-			}
-		case 93:
-			if val, _ := s.Top(); val == 91 {
-				s.Pop()
-			} else {
-				return false
-			}
-		case 125:
-			if val, _ := s.Top(); val == 123 {
-				s.Pop()
-			} else {
-				return false
-			}
-		}
-	}
-	return true
-}
-
 // stack of strings
 type stringItem struct {
 	val   string
@@ -235,4 +205,48 @@ func EvaluatePostfix(s string) int {
 	}
 	result, _ := stack.Top()
 	return result
+}
+
+// evaluate infix expression
+func EvaluateInfix(s string) int {
+	if CheckBracketPairs(s) {
+		postfix := InfixToPostfix(s)
+		return EvaluatePostfix(postfix)
+	} else {
+		return 0
+	}
+}
+
+// stack implementation of bracket pair check
+func CheckBracketPairs(exp string) bool {
+	s := NewStringStack()
+	for _, c := range exp {
+		switch string(c) {
+		case "(", "{", "[":
+			s.Push(string(c))
+		case ")":
+			if val, _ := s.Top(); val == "(" {
+				s.Pop()
+			} else {
+				return false
+			}
+		case "}":
+			if val, _ := s.Top(); val == "{" {
+				s.Pop()
+			} else {
+				return false
+			}
+		case "]":
+			if val, _ := s.Top(); val == "[" {
+				s.Pop()
+			} else {
+				return false
+			}
+		}
+	}
+	_, ok := s.Top()
+	if ok {
+		return false
+	}
+	return true
 }
