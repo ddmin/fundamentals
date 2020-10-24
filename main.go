@@ -183,8 +183,13 @@ func testDoublyLinked() {
 	d.Display()
 
 	titleize("Reverse")
-	d.Reverse()
-	d.Display()
+	a := datastruct.NewDoublyLinked()
+	for n := 0; n < 10; n++ {
+		a.Display()
+		a.Reverse()
+		a.Display()
+		a.Append(n)
+	}
 }
 
 // test stack functionality
