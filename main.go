@@ -3,24 +3,33 @@ package main
 import (
 	"fmt"
 	"github.com/ddmin/fundamentals/datastruct"
+	"strings"
 )
 
 // to differentiate text
 func titleize(s string) {
-	bars := "======================================="
+
+	length := (80 - len(s) - 2) / 2
+	bars := strings.Repeat("=", length)
 	fmt.Print("\n", bars, " ", s, " ", bars, "\n\n")
 }
 
 // to differentiate different data structures
 func separate(s string) {
-	bars := "###################################################################"
-	fmt.Print("\n", bars, " ", s, " ", bars, "\n\n")
+	length := (78 - len(s) - 2) / 2
+	bars := strings.Repeat(" ", length)
+	middle := "*" + bars + " " + s + " " + bars + "*"
+	cover := strings.Repeat("*", len(middle))
+
+	fmt.Println("\n\n" + cover)
+	fmt.Println(middle)
+	fmt.Print(cover, "\n\n\n")
 }
 
 // test list functionality
 func testList() {
 	l := datastruct.NewList()
-	separate("Init List")
+	separate("List")
 	l.Display()
 
 	titleize("Prepending")
@@ -64,7 +73,7 @@ func testList() {
 // test linked list functionality
 func testLinkedList() {
 	l := datastruct.NewLinkedList()
-	separate("Init Linked List")
+	separate("Linked List")
 	l.Display()
 
 	titleize("Prepending")
@@ -135,7 +144,7 @@ func testLinkedList() {
 // test doubly linked list functionality
 func testDoublyLinked() {
 	d := datastruct.NewDoublyLinked()
-	separate("Init Doubly Linked")
+	separate("Doubly Linked")
 	d.Display()
 
 	titleize("Prepending")
@@ -181,7 +190,7 @@ func testDoublyLinked() {
 // test stack functionality
 func testStack() {
 	s := datastruct.NewStack()
-	separate("Init Stack")
+	separate("Stack")
 	titleize("Pushing")
 	for i := 0; i <= 10; i++ {
 		s.Push(i)
