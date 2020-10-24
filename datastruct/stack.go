@@ -2,24 +2,27 @@ package datastruct
 
 import (
 	"math"
+	"strconv"
+	"strings"
 )
 
-type item struct {
+// stack of ints
+type intItem struct {
 	val   int
-	below *item
+	below *intItem
 }
 
-type stack struct {
-	top *item
+type intStack struct {
+	top *intItem
 }
 
 // return new instance of stack
-func NewStack() *stack {
-	return &stack{nil}
+func NewIntStack() *intStack {
+	return &intStack{nil}
 }
 
 // return top of stack
-func (s *stack) Top() (i int, ok bool) {
+func (s *intStack) Top() (i int, ok bool) {
 	if s.IsEmpty() {
 		return 0, false
 	} else {
@@ -28,17 +31,17 @@ func (s *stack) Top() (i int, ok bool) {
 }
 
 // check if stack is empty
-func (s *stack) IsEmpty() bool {
+func (s *intStack) IsEmpty() bool {
 	return s.top == nil
 }
 
 // push i on top of stack
-func (s *stack) Push(i int) {
-	s.top = &item{i, s.top}
+func (s *intStack) Push(i int) {
+	s.top = &intItem{i, s.top}
 }
 
 // pop the top off of stack
-func (s *stack) Pop() {
+func (s *intStack) Pop() {
 	if s.IsEmpty() {
 		return
 	}
@@ -50,7 +53,7 @@ func (s *stack) Pop() {
 // testing reversing using stack
 func ReverseInteger(n int) int {
 	i := 0
-	s := NewStack()
+	s := NewIntStack()
 	for int(math.Pow10(i)) <= n {
 		i++
 	}
@@ -73,7 +76,7 @@ func ReverseInteger(n int) int {
 
 // stack implementation of bracket pair check
 func CheckBracketPairs(exp string) bool {
-	s := NewStack()
+	s := NewIntStack()
 	for _, c := range exp {
 		switch c {
 		case 40, 91, 123:
@@ -99,4 +102,137 @@ func CheckBracketPairs(exp string) bool {
 		}
 	}
 	return true
+}
+
+// stack of strings
+type stringItem struct {
+	val   string
+	below *stringItem
+}
+
+type stringStack struct {
+	top *stringItem
+}
+
+// return new instance of stack
+func NewStringStack() *stringStack {
+	return &stringStack{nil}
+}
+
+// return top of stack
+func (s *stringStack) Top() (i string, ok bool) {
+	if s.IsEmpty() {
+		return "", false
+	} else {
+		return s.top.val, true
+	}
+}
+
+// check if stack is empty
+func (s *stringStack) IsEmpty() bool {
+	return s.top == nil
+}
+
+// push i on top of stack
+func (s *stringStack) Push(i string) {
+	s.top = &stringItem{i, s.top}
+}
+
+// pop the top off of stack
+func (s *stringStack) Pop() {
+	if s.IsEmpty() {
+		return
+	}
+	s.top = s.top.below
+}
+
+// string stack implementation of reverse
+func ReverseString(i string) string {
+	s := NewStringStack()
+	result := ""
+	for _, i := range i {
+		s.Push(string(i))
+	}
+	for !s.IsEmpty() {
+		top, _ := s.Top()
+		result += top
+		s.Pop()
+	}
+	return result
+}
+
+// convert infix notation to postfix notation
+func InfixToPostfix(s string) string {
+	result := ""
+	stack := NewStringStack()
+	for _, c := range strings.Split(s, " ") {
+		switch c {
+		case "(", "*", "/":
+			stack.Push(c)
+
+		case "+", "-":
+			t, _ := stack.Top()
+			switch t {
+			case "*", "/":
+				top, _ := stack.Top()
+				result += top + " "
+				stack.Pop()
+				stack.Push(c)
+			default:
+				stack.Push(c)
+			}
+
+		case ")":
+			for true {
+				top, _ := stack.Top()
+				if top == "(" {
+					break
+				}
+				result += top + " "
+				stack.Pop()
+			}
+			stack.Pop()
+
+		default:
+			result += c + " "
+		}
+	}
+	for !stack.IsEmpty() {
+		top, _ := stack.Top()
+		result += top
+		if !(stack.top.below == nil) {
+			result += " "
+		}
+		stack.Pop()
+	}
+	return result
+}
+
+// evaluate postfix expression
+func EvaluatePostfix(s string) int {
+	stack := NewIntStack()
+	for _, i := range strings.Split(s, " ") {
+		switch i {
+		case "+", "-", "*", "/":
+			operand2, _ := stack.Top()
+			stack.Pop()
+			operand1, _ := stack.Top()
+			stack.Pop()
+			switch i {
+			case "+":
+				stack.Push(operand1 + operand2)
+			case "-":
+				stack.Push(operand1 - operand2)
+			case "*":
+				stack.Push(operand1 * operand2)
+			case "/":
+				stack.Push(operand1 / operand2)
+			}
+		default:
+			n, _ := strconv.Atoi(string(i))
+			stack.Push(n)
+		}
+	}
+	result, _ := stack.Top()
+	return result
 }

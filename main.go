@@ -192,10 +192,10 @@ func testDoublyLinked() {
 	}
 }
 
-// test stack functionality
-func testStack() {
-	s := datastruct.NewStack()
-	separate("Stack")
+// test int stack functionality
+func testIntStack() {
+	s := datastruct.NewIntStack()
+	separate("Int Stack")
 	titleize("Pushing")
 	for i := 0; i <= 10; i++ {
 		s.Push(i)
@@ -214,7 +214,7 @@ func testStack() {
 			fmt.Println("Stack is empty!")
 		}
 	}
-	titleize("Reversing (using stacks)")
+	titleize("Reversing integer (using stacks)")
 	for _, integer := range [...]int{1000, 12419, 28072, 5, 19, 10012} {
 		fmt.Println(integer, "->", datastruct.ReverseInteger(integer))
 	}
@@ -227,11 +227,84 @@ func testStack() {
 	fmt.Println(gibberish2, "->", datastruct.CheckBracketPairs(gibberish2))
 }
 
+// test int stack functionality
+func testStringStack() {
+	s := datastruct.NewStringStack()
+	separate("String Stack")
+	titleize("Pushing")
+	for _, i := range [...]string{
+		"Zero",
+		"One",
+		"Two",
+		"Three",
+		"Four",
+		"Five",
+		"Six",
+		"Seven",
+		"Eight",
+		"Nine",
+		"Ten",
+	} {
+		s.Push(i)
+		n, ok := s.Top()
+		if ok {
+			fmt.Println("Top:", n)
+		}
+	}
+
+	titleize("Popping")
+	for i := 0; i < 12; i++ {
+		s.Pop()
+		n, ok := s.Top()
+		if ok {
+			fmt.Println("Top:", n)
+		} else {
+			fmt.Println("Stack is empty!")
+		}
+	}
+
+	titleize("Reversing strings (using stacks)")
+	for _, str := range [...]string{
+		"Hello World!",
+		"This will be reversed",
+		"A Toyota Racecar",
+	} {
+		fmt.Println(str, "->", datastruct.ReverseString(str))
+	}
+
+	titleize("Infix -> Postfix")
+	equations := []string{
+		"( 7 / ( 3 + 4 ) ) * 9 * ( 8 - 4 )",
+		"3 * ( 6 + 2 )",
+		"( ( 5 + 2 ) * 5 - 1 ) * 3",
+		"9 * ( 4 + 5 ) )",
+	}
+
+	postfix := []string{}
+
+	for _, eq := range equations {
+		if datastruct.CheckBracketPairs(eq) {
+			converted := datastruct.InfixToPostfix(eq)
+			fmt.Println(eq, " -> ", converted)
+			postfix = append(postfix, converted)
+		} else {
+			fmt.Println("Syntax Error: ", eq)
+		}
+	}
+
+	titleize("Evaluate Postfix")
+	for _, eq := range postfix {
+		fmt.Println("("+eq, ") -> ", datastruct.EvaluatePostfix(eq))
+	}
+}
+
 func main() {
 	// list-like data structures
 	testList()
 	testLinkedList()
 	testDoublyLinked()
 
-	testStack()
+	// test stack data structures
+	testIntStack()
+	testStringStack()
 }
